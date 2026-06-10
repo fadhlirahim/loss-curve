@@ -7,6 +7,8 @@ descending training-loss curve — loss being what you don't know yet.
 
 All progress lives in `localStorage`. No account, no backend state.
 
+<img width="957" height="1095" alt="Screenshot 2026-06-10 at 7 29 17 PM" src="https://github.com/user-attachments/assets/b0665a1d-fd14-4b43-807b-5635a1e978ca" />
+
 ## Stack
 
 TanStack Start + TanStack Router on Cloudflare Workers (`@cloudflare/vite-plugin`),
