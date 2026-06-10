@@ -4,7 +4,11 @@ export type ChecklistItem = {
 }
 
 /** In-app interactive explainer routes a learn topic can link to. */
-export type LearnRoute = '/learn/backprop' | '/learn/gradient-descent' | '/learn/neural-net'
+export type LearnRoute =
+  | '/learn/backprop'
+  | '/learn/gradient-descent'
+  | '/learn/neural-net'
+  | '/learn/core-ml'
 
 export type Phase = {
   slug: string
@@ -131,6 +135,7 @@ export const PHASES: Phase[] = [
         title: 'Core ML',
         detail:
           "Loss functions (cross-entropy especially), train/val/test, overfitting, regularization, bias–variance. The grammar of every experiment you'll run.",
+        to: '/learn/core-ml',
       },
       {
         title: 'Math, just-in-time',

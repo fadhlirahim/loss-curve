@@ -16,10 +16,13 @@ export function Boundary({
   net,
   data,
   activation,
+  valData,
 }: {
   net: Net
   data: Point[]
   activation: Activation
+  /** held-out points, drawn as hollow rings — the exam the net never sees */
+  valData?: Point[]
 }) {
   const grid = predictGrid(net, activation, RES)
 
@@ -58,6 +61,17 @@ export function Boundary({
           fill={pt.label === 1 ? 'var(--color-vermillion)' : 'var(--color-moss)'}
           stroke="var(--color-paper-bright)"
           strokeWidth="1.25"
+        />
+      ))}
+      {valData?.map((pt) => (
+        <circle
+          key={`${pt.x}:${pt.y}`}
+          cx={px(pt.x)}
+          cy={py(pt.y)}
+          r="3.5"
+          fill="none"
+          stroke={pt.label === 1 ? 'var(--color-vermillion)' : 'var(--color-moss)'}
+          strokeWidth="1.75"
         />
       ))}
       <rect

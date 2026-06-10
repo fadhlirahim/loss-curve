@@ -162,7 +162,13 @@ function backpropSample(
  * One full-batch gradient-descent epoch (forward + backprop over every
  * point, then a single weight update). Returns the mean BCE loss.
  */
-function epoch(net: Net, data: Point[], lr: number, activation: Activation): number {
+function epoch(
+  net: Net,
+  data: Point[],
+  lr: number,
+  activation: Activation,
+  weightDecay: number,
+): number {
   const dW = net.W.map((m) => m.map((row) => row.map(() => 0)))
   const db = net.b.map((v) => v.map(() => 0))
   let loss = 0
@@ -172,7 +178,9 @@ function epoch(net: Net, data: Point[], lr: number, activation: Activation): num
   for (let l = 0; l < net.W.length; l++) {
     for (let i = 0; i < net.W[l].length; i++) {
       net.b[l][i] -= (lr * db[l][i]) / n
-      for (let j = 0; j < net.W[l][i].length; j++) net.W[l][i][j] -= (lr * dW[l][i][j]) / n
+      for (let j = 0; j < net.W[l][i].length; j++)
+        // L2 regularization: every weight is also pulled gently toward zero
+        net.W[l][i][j] -= lr * (dW[l][i][j] / n + weightDecay * net.W[l][i][j])
     }
   }
   return loss / n
@@ -185,6 +193,7 @@ export function trainEpochs(
   lr: number,
   activation: Activation,
   epochs: number,
+  weightDecay = 0,
 ): { net: Net; loss: number } {
   const copy: Net = {
     sizes: net.sizes,
@@ -192,8 +201,23 @@ export function trainEpochs(
     b: net.b.map((v) => [...v]),
   }
   let loss = 0
-  for (let e = 0; e < epochs; e++) loss = epoch(copy, data, lr, activation)
+  for (let e = 0; e < epochs; e++) loss = epoch(copy, data, lr, activation, weightDecay)
   return { net: copy, loss }
+}
+
+/** Mean BCE over a dataset without touching the weights — the "exam grade". */
+export function meanLoss(net: Net, data: Point[], activation: Activation): number {
+  let loss = 0
+  for (const p of data) {
+    const out = predict(net, p.x, p.y, activation)
+    loss += -(p.label * Math.log(out + 1e-9) + (1 - p.label) * Math.log(1 - out + 1e-9))
+  }
+  return loss / data.length
+}
+
+/** Expose the seeded RNG so sibling labs can derive reproducible variations. */
+export function seededRng(seed: number): () => number {
+  return mulberry32(seed)
 }
 
 export function accuracy(net: Net, data: Point[], activation: Activation): number {
