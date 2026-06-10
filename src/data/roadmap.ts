@@ -9,6 +9,7 @@ export type LearnRoute =
   | '/learn/gradient-descent'
   | '/learn/neural-net'
   | '/learn/core-ml'
+  | '/learn/math'
 
 export type Phase = {
   slug: string
@@ -18,7 +19,7 @@ export type Phase = {
   tagline: string
   goal: string
   gap: string
-  learn: { title: string; detail: string; to?: LearnRoute }[]
+  learn: { title: string; detail: string; to?: LearnRoute; badge?: string }[]
   path: { title: string; detail: string; href?: string }[]
   deliverable: string
   milestones: ChecklistItem[]
@@ -141,6 +142,8 @@ export const PHASES: Phase[] = [
         title: 'Math, just-in-time',
         detail:
           'Linear algebra (what a matrix does to a vector), calculus (the chain rule), probability (cross-entropy/KL). Learn each when the model above forces you to.',
+        to: '/learn/math',
+        badge: 'the ledger',
       },
     ],
     path: [

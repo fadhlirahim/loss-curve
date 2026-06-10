@@ -92,7 +92,7 @@ function PhasePage() {
                       to={item.to}
                       className="ml-3 font-medium font-mono text-[0.65rem] text-vermillion uppercase tracking-widest hover:underline"
                     >
-                      interactive lab →
+                      {item.badge ?? 'interactive lab'} →
                     </Link>
                   )}
                 </h3>
