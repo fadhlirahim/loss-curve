@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bowl, LossCurveStrip } from '@/components/gradient-descent/bowl'
 import {
   advanceRace,
@@ -17,6 +17,7 @@ import {
 import { Ravine } from '@/components/gradient-descent/ravine'
 import { Section } from '@/components/section'
 import { Tex } from '@/components/tex'
+import { useTicker } from '@/hooks/use-ticker'
 import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/learn/gradient-descent')({
@@ -25,17 +26,6 @@ export const Route = createFileRoute('/learn/gradient-descent')({
   }),
   component: GradientDescentPage,
 })
-
-/** Drive `fn` on a fixed tick while `active` — the run/pause animation loop. */
-function useTicker(active: boolean, fn: () => void) {
-  const fnRef = useRef(fn)
-  fnRef.current = fn
-  useEffect(() => {
-    if (!active) return
-    const id = setInterval(() => fnRef.current(), 90)
-    return () => clearInterval(id)
-  }, [active])
-}
 
 const VERDICT_TONE = {
   ok: 'text-moss-deep dark:text-moss',

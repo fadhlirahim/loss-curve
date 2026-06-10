@@ -4,7 +4,7 @@ export type ChecklistItem = {
 }
 
 /** In-app interactive explainer routes a learn topic can link to. */
-export type LearnRoute = '/learn/backprop' | '/learn/gradient-descent'
+export type LearnRoute = '/learn/backprop' | '/learn/gradient-descent' | '/learn/neural-net'
 
 export type Phase = {
   slug: string
@@ -125,6 +125,7 @@ export const PHASES: Phase[] = [
       {
         title: 'A neural net from scratch',
         detail: 'MLP, activations, initialization, why depth helps.',
+        to: '/learn/neural-net',
       },
       {
         title: 'Core ML',
