@@ -1,6 +1,6 @@
 # Roadmap to Mastery — interactive learning site
 
-The [`../roadmap-to-mastery`](../roadmap-to-mastery) ML/LLM research roadmap as an interactive
+The https://fadhlirahim.github.io/swe-to-researcher/  ML/LLM research roadmap as an interactive
 website: phase pages with artifact checklists, a weekly habit tracker, a "you are here"
 diagnostic, the jargon decoder, and the resource shelf. Your overall progress renders as a
 descending training-loss curve — loss being what you don't know yet.
