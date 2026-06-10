@@ -12,6 +12,7 @@ import {
 } from '@/components/backprop/model'
 import { SlopePlot } from '@/components/backprop/slope-plot'
 import { Section } from '@/components/section'
+import { Tex } from '@/components/tex'
 import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/learn/backprop')({
@@ -56,9 +57,11 @@ function BackpropPage() {
           simple operations. Below is the smallest graph worth studying: turn the dials, then walk
           the gradient home.
         </p>
-        <p className="rise rise-3 mt-4 font-mono text-[0.7rem] text-ink-faint">
-          L = tanh(a × b + c) × f — one multiply, one add, one squish, one scale. A one-neuron
-          network in miniature.
+        <p className="rise rise-3 mt-4 flex flex-wrap items-center gap-x-3 font-mono text-[0.7rem] text-ink-faint">
+          <Tex tex="L = \tanh(a \times b + c) \times f" className="text-[1.05rem] text-ink" />
+          <span>
+            — one multiply, one add, one squish, one scale. a one-neuron network in miniature.
+          </span>
         </p>
       </div>
 
@@ -141,7 +144,7 @@ function BackpropPage() {
                 <p className="font-mono text-[0.68rem] text-vermillion uppercase tracking-widest">
                   node {step.node} · {step.rule}
                 </p>
-                <p className="mt-1.5 font-mono text-ink text-sm">{step.formula(evaluation)}</p>
+                <Tex block tex={step.formula(evaluation)} className="mt-1.5 text-ink" />
                 <p className="mt-2 max-w-2xl text-[0.95rem] text-ink-soft leading-relaxed">
                   {step.note}
                 </p>
@@ -167,11 +170,11 @@ function BackpropPage() {
       <Section label="§ 2 · What the number means" title="A gradient is a slope, and a promise">
         <p className="prose-note mb-8 max-w-2xl">
           Freeze every dial except <strong>a</strong> and plot L against it. The vermillion
-          tangent's slope is exactly the ∂L/∂a the backward pass produced — backprop never saw this
-          curve, yet it knows the steepness at your point. The promise is <em>local</em>: nudge a by
-          ε and the tangent predicts ΔL ≈ slope × ε. Grow ε and watch the prediction (hollow ring)
-          drift off the curve (moss dot). That gap is why training takes many <strong>small</strong>{' '}
-          steps instead of one big one.
+          tangent's slope is exactly the <Tex tex="\partial L / \partial a" /> the backward pass
+          produced — backprop never saw this curve, yet it knows the steepness at your point. The
+          promise is <em>local</em>: nudge a by ε and the tangent predicts ΔL ≈ slope × ε. Grow ε
+          and watch the prediction (hollow ring) drift off the curve (moss dot). That gap is why
+          training takes many <strong>small</strong> steps instead of one big one.
         </p>
 
         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
@@ -209,15 +212,25 @@ function BackpropPage() {
       <Section label="§ 3 · The whole algorithm" title="Three local rules, multiplied backward">
         <div className="grid gap-5 sm:grid-cols-3">
           {[
-            ['× swaps the inputs', '∂(x·y)/∂x = y. Wiggle one factor, L moves by the other.'],
-            ['+ passes it through', '∂(x+y)/∂x = 1. Addition distributes the gradient unchanged.'],
-            [
-              'tanh scales by its slope',
-              '∂tanh(x)/∂x = 1 − tanh²(x). Flat curve, dead gradient — saturation in one line.',
-            ],
-          ].map(([rule, why]) => (
+            {
+              rule: '× swaps the inputs',
+              tex: '\\frac{\\partial (x \\cdot y)}{\\partial x} = y',
+              why: 'Wiggle one factor, L moves by the other.',
+            },
+            {
+              rule: '+ passes it through',
+              tex: '\\frac{\\partial (x + y)}{\\partial x} = 1',
+              why: 'Addition distributes the gradient unchanged.',
+            },
+            {
+              rule: 'tanh scales by its slope',
+              tex: '\\frac{\\partial \\tanh(x)}{\\partial x} = 1 - \\tanh^2(x)',
+              why: 'Flat curve, dead gradient — saturation in one line.',
+            },
+          ].map(({ rule, tex, why }) => (
             <div key={rule} className="border border-paper-edge bg-paper-deep/30 p-5">
               <h3 className="font-display font-semibold">{rule}</h3>
+              <Tex block tex={tex} className="mt-3 text-[0.9rem] text-ink" />
               <p className="mt-2 font-mono text-[0.78rem] text-ink-soft leading-relaxed">{why}</p>
             </div>
           ))}
