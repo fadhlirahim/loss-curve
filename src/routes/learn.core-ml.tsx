@@ -9,6 +9,8 @@ import {
   LABEL_NOISE,
   makeSplit,
 } from '@/components/core-ml/model'
+import { ExperimentCards, RuleCards } from '@/components/lab/cards'
+import { Chips } from '@/components/lab/chips'
 import { Boundary } from '@/components/neural-net/boundary'
 import {
   EPOCHS_PER_TICK,
@@ -21,7 +23,6 @@ import {
 import { Section } from '@/components/section'
 import { Tex } from '@/components/tex'
 import { useTicker } from '@/hooks/use-ticker'
-import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/learn/core-ml')({
   head: () => ({ meta: [{ title: 'Core ML, interactively · Roadmap to Mastery' }] }),
@@ -92,8 +93,8 @@ function CoreMlPage() {
 
       {/* ── the takeaway ─────────────────────────────────────── */}
       <Section label="§ 4 · The grammar" title="Three sentences you now own">
-        <div className="grid gap-5 sm:grid-cols-3">
-          {[
+        <RuleCards
+          items={[
             {
               rule: 'cross-entropy prices confidence',
               tex: 'L = -\\log p_{\\text{truth}}',
@@ -109,14 +110,8 @@ function CoreMlPage() {
               tex: '\\text{data} \\uparrow \\quad \\lambda \\uparrow \\quad \\text{stop early}',
               why: 'More data, a smaller/regularized model, or stop at the moss dot. (The milestone asks you for three — these are them.)',
             },
-          ].map(({ rule, tex, why }) => (
-            <div key={rule} className="border border-paper-edge bg-paper-deep/30 p-5">
-              <h3 className="font-display font-semibold">{rule}</h3>
-              <Tex block tex={tex} className="mt-3 text-[0.9rem] text-ink" />
-              <p className="mt-2 font-mono text-[0.78rem] text-ink-soft leading-relaxed">{why}</p>
-            </div>
-          ))}
-        </div>
+          ]}
+        />
         <p className="prose-note mt-8 max-w-2xl">
           The Phase 1 milestone says it directly:{' '}
           <strong>
@@ -385,27 +380,7 @@ function OverfitLab() {
       <hr className="rule mx-auto max-w-4xl" />
 
       <Section label="§ 3 · Run these" title="Bias, variance, and the two rescues">
-        <div className="grid gap-5 sm:grid-cols-2">
-          {EXPERIMENTS.map((ex) => (
-            <div
-              key={ex.title}
-              className="flex flex-col border border-paper-edge bg-paper-deep/30 p-5"
-            >
-              <h3 className="font-display font-semibold">{ex.title}</h3>
-              <p className="mt-2 flex-1 text-[0.95rem] text-ink-soft leading-relaxed">{ex.story}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  update({ ...ex.setup }, true)
-                  document.getElementById('lab')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="mt-4 self-start bg-ink px-4 py-2 font-mono text-paper text-xs transition-colors hover:bg-vermillion"
-              >
-                load &amp; train ▸
-              </button>
-            </div>
-          ))}
-        </div>
+        <ExperimentCards items={EXPERIMENTS} onLoad={(setup) => update({ ...setup }, true)} />
       </Section>
     </>
   )
@@ -436,39 +411,4 @@ function verdictFor(
     }
   if (epochs >= MAX_EPOCHS) return { label: `stopped at ${MAX_EPOCHS} epochs`, tone: 'text-gold' }
   return { label: 'training…', tone: 'text-ink-faint' }
-}
-
-function Chips({
-  label,
-  options,
-  value,
-  onPick,
-}: {
-  label: string
-  options: { id: string; label: string }[]
-  value: string
-  onPick: (id: string) => void
-}) {
-  return (
-    <div className="font-mono text-xs">
-      <p className="text-[0.65rem] text-ink-faint uppercase tracking-widest">{label}</p>
-      <div className="mt-1.5 flex flex-wrap gap-2">
-        {options.map((o) => (
-          <button
-            key={o.id}
-            type="button"
-            onClick={() => onPick(o.id)}
-            className={cn(
-              'border px-3 py-1.5 transition-colors',
-              o.id === value
-                ? 'border-vermillion-deep bg-vermillion text-paper'
-                : 'border-paper-edge text-ink-soft hover:border-ink',
-            )}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
 }

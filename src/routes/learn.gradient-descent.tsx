@@ -15,6 +15,7 @@ import {
   W0,
 } from '@/components/gradient-descent/model'
 import { Ravine } from '@/components/gradient-descent/ravine'
+import { RuleCards } from '@/components/lab/cards'
 import { Section } from '@/components/section'
 import { Tex } from '@/components/tex'
 import { useTicker } from '@/hooks/use-ticker'
@@ -65,27 +66,22 @@ function GradientDescentPage() {
 
       {/* ── the takeaway ─────────────────────────────────────── */}
       <Section label="§ 3 · The whole toolbox" title="One number, two fixes">
-        <div className="grid gap-5 sm:grid-cols-3">
-          {[
-            [
-              'learning rate η',
-              'The step size. Too small wastes compute, too big destroys the run, and the safe range depends on the curvature — which you never know in advance. Hence: watch the loss curve.',
-            ],
-            [
-              'momentum — a heavy ball',
-              'Average your recent gradients and step along that. Zigzags across the ravine cancel out; the steady pull along it compounds. One extra number (β ≈ 0.9), dramatic effect.',
-            ],
-            [
-              'Adam — a learning rate per dial',
-              "Track each dial's typical gradient size and divide by it, so steep dials get small steps and shallow dials get big ones. The default optimizer for most of deep learning.",
-            ],
-          ].map(([rule, why]) => (
-            <div key={rule} className="border border-paper-edge bg-paper-deep/30 p-5">
-              <h3 className="font-display font-semibold">{rule}</h3>
-              <p className="mt-2 font-mono text-[0.78rem] text-ink-soft leading-relaxed">{why}</p>
-            </div>
-          ))}
-        </div>
+        <RuleCards
+          items={[
+            {
+              rule: 'learning rate η',
+              why: 'The step size. Too small wastes compute, too big destroys the run, and the safe range depends on the curvature — which you never know in advance. Hence: watch the loss curve.',
+            },
+            {
+              rule: 'momentum — a heavy ball',
+              why: 'Average your recent gradients and step along that. Zigzags across the ravine cancel out; the steady pull along it compounds. One extra number (β ≈ 0.9), dramatic effect.',
+            },
+            {
+              rule: 'Adam — a learning rate per dial',
+              why: "Track each dial's typical gradient size and divide by it, so steep dials get small steps and shallow dials get big ones. The default optimizer for most of deep learning.",
+            },
+          ]}
+        />
         <p className="prose-note mt-8 max-w-2xl">
           The Phase 1 milestone asks you to{' '}
           <strong>diagnose a too-high learning rate from the loss curve</strong> — you've now

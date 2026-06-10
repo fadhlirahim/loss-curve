@@ -11,6 +11,7 @@ import {
   STEPS,
 } from '@/components/backprop/model'
 import { SlopePlot } from '@/components/backprop/slope-plot'
+import { RuleCards } from '@/components/lab/cards'
 import { Section } from '@/components/section'
 import { Tex } from '@/components/tex'
 import { cn } from '@/lib/utils'
@@ -210,8 +211,8 @@ function BackpropPage() {
 
       {/* ── the takeaway ─────────────────────────────────────── */}
       <Section label="§ 3 · The whole algorithm" title="Three local rules, multiplied backward">
-        <div className="grid gap-5 sm:grid-cols-3">
-          {[
+        <RuleCards
+          items={[
             {
               rule: '× swaps the inputs',
               tex: '\\frac{\\partial (x \\cdot y)}{\\partial x} = y',
@@ -227,14 +228,8 @@ function BackpropPage() {
               tex: '\\frac{\\partial \\tanh(x)}{\\partial x} = 1 - \\tanh^2(x)',
               why: 'Flat curve, dead gradient — saturation in one line.',
             },
-          ].map(({ rule, tex, why }) => (
-            <div key={rule} className="border border-paper-edge bg-paper-deep/30 p-5">
-              <h3 className="font-display font-semibold">{rule}</h3>
-              <Tex block tex={tex} className="mt-3 text-[0.9rem] text-ink" />
-              <p className="mt-2 font-mono text-[0.78rem] text-ink-soft leading-relaxed">{why}</p>
-            </div>
-          ))}
-        </div>
+          ]}
+        />
         <p className="prose-note mt-8 max-w-2xl">
           Every node answers one tiny local question and multiplies it by the gradient arriving from
           downstream — no node ever sees the whole graph. A billion-parameter transformer trains

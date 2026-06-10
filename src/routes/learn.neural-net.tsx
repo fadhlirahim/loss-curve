@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
+import { ExperimentCards, RuleCards } from '@/components/lab/cards'
+import { Chips } from '@/components/lab/chips'
 import { Boundary, NetLossStrip } from '@/components/neural-net/boundary'
 import {
   type Activation,
@@ -20,7 +22,6 @@ import {
 import { Section } from '@/components/section'
 import { Tex } from '@/components/tex'
 import { useTicker } from '@/hooks/use-ticker'
-import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/learn/neural-net')({
   head: () => ({
@@ -262,35 +263,18 @@ function NeuralNetPage() {
 
       {/* ── experiments ──────────────────────────────────────── */}
       <Section label="§ 2 · Run these" title="Four experiments, four lessons">
-        <div className="grid gap-5 sm:grid-cols-2">
-          {EXPERIMENTS.map((ex) => (
-            <div
-              key={ex.title}
-              className="flex flex-col border border-paper-edge bg-paper-deep/30 p-5"
-            >
-              <h3 className="font-display font-semibold">{ex.title}</h3>
-              <p className="mt-2 flex-1 text-[0.95rem] text-ink-soft leading-relaxed">{ex.story}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  update({ ...ex.setup, lr: 1, seed: config.seed }, true)
-                  document.getElementById('lab')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="mt-4 self-start bg-ink px-4 py-2 font-mono text-paper text-xs transition-colors hover:bg-vermillion"
-              >
-                load &amp; train ▸
-              </button>
-            </div>
-          ))}
-        </div>
+        <ExperimentCards
+          items={EXPERIMENTS}
+          onLoad={(setup) => update({ ...setup, lr: 1 }, true)}
+        />
       </Section>
 
       <hr className="rule mx-auto max-w-4xl" />
 
       {/* ── the takeaway ─────────────────────────────────────── */}
       <Section label="§ 3 · Why it works" title="Mix, bend, stack">
-        <div className="grid gap-5 sm:grid-cols-3">
-          {[
+        <RuleCards
+          items={[
             {
               rule: 'activations bend',
               tex: 'W^{(2)}\\!\\left(W^{(1)}x\\right) = \\left(W^{(2)} W^{(1)}\\right) x',
@@ -306,14 +290,8 @@ function NeuralNetPage() {
               tex: 'W \\sim \\mathcal{N}\\!\\left(0, \\tfrac{1}{n_{\\text{in}}}\\right)',
               why: 'Identical neurons get identical gradients and never differentiate — so start random. Scale by fan-in so signals neither explode nor vanish as they cross layers.',
             },
-          ].map(({ rule, tex, why }) => (
-            <div key={rule} className="border border-paper-edge bg-paper-deep/30 p-5">
-              <h3 className="font-display font-semibold">{rule}</h3>
-              <Tex block tex={tex} className="mt-3 text-[0.9rem] text-ink" />
-              <p className="mt-2 font-mono text-[0.78rem] text-ink-soft leading-relaxed">{why}</p>
-            </div>
-          ))}
-        </div>
+          ]}
+        />
         <p className="prose-note mt-8 max-w-2xl">
           Everything on this page is ~120 lines of plain code — the forward loop, the backward loop,
           the update. No framework, no magic. That's the Phase 1 bet:{' '}
@@ -370,39 +348,4 @@ function verdictFor(
   if (epochs === 0)
     return { label: 'untrained — the tint is initialization luck', tone: 'text-ink-faint' }
   return { label: 'training…', tone: 'text-ink-faint' }
-}
-
-function Chips({
-  label,
-  options,
-  value,
-  onPick,
-}: {
-  label: string
-  options: { id: string; label: string }[]
-  value: string
-  onPick: (id: string) => void
-}) {
-  return (
-    <div className="font-mono text-xs">
-      <p className="text-[0.65rem] text-ink-faint uppercase tracking-widest">{label}</p>
-      <div className="mt-1.5 flex flex-wrap gap-2">
-        {options.map((o) => (
-          <button
-            key={o.id}
-            type="button"
-            onClick={() => onPick(o.id)}
-            className={cn(
-              'border px-3 py-1.5 transition-colors',
-              o.id === value
-                ? 'border-vermillion-deep bg-vermillion text-paper'
-                : 'border-paper-edge text-ink-soft hover:border-ink',
-            )}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
 }
