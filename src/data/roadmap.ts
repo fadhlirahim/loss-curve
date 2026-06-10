@@ -3,6 +3,9 @@ export type ChecklistItem = {
   text: string
 }
 
+/** In-app interactive explainer routes a learn topic can link to. */
+export type LearnRoute = '/learn/backprop'
+
 export type Phase = {
   slug: string
   number: number
@@ -11,7 +14,7 @@ export type Phase = {
   tagline: string
   goal: string
   gap: string
-  learn: { title: string; detail: string }[]
+  learn: { title: string; detail: string; to?: LearnRoute }[]
   path: { title: string; detail: string; href?: string }[]
   deliverable: string
   milestones: ChecklistItem[]
@@ -112,6 +115,7 @@ export const PHASES: Phase[] = [
         title: 'Backpropagation',
         detail:
           'The chain rule applied to a computation graph. The single most important thing in this phase. Implement reverse-mode autodiff and most of deep learning stops being magic.',
+        to: '/learn/backprop',
       },
       {
         title: 'Gradient descent & optimizers',

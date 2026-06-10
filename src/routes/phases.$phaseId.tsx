@@ -79,7 +79,23 @@ function PhasePage() {
             <li key={item.title} className="flex gap-5">
               <span className="font-mono text-sm text-vermillion">{i + 1}</span>
               <div>
-                <h3 className="font-display font-semibold text-lg">{item.title}</h3>
+                <h3 className="font-display font-semibold text-lg">
+                  {item.to ? (
+                    <Link to={item.to} className="link-ink">
+                      {item.title}
+                    </Link>
+                  ) : (
+                    item.title
+                  )}
+                  {item.to && (
+                    <Link
+                      to={item.to}
+                      className="ml-3 font-medium font-mono text-[0.65rem] text-vermillion uppercase tracking-widest hover:underline"
+                    >
+                      interactive lab →
+                    </Link>
+                  )}
+                </h3>
                 <p className="prose-note mt-0.5">{item.detail}</p>
               </div>
             </li>
