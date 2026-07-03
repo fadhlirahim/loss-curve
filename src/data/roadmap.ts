@@ -11,6 +11,11 @@ export type LearnRoute =
   | '/learn/core-ml'
   | '/learn/math'
   | '/learn/attention'
+  | '/learn/transformer-block'
+  | '/learn/tokenizer'
+  | '/learn/positions'
+  | '/learn/training-loop'
+  | '/learn/pipeline'
 
 export type Phase = {
   slug: string
@@ -227,24 +232,29 @@ export const PHASES: Phase[] = [
       {
         title: 'The transformer block',
         detail: 'Attention + MLP, residual connections, LayerNorm/RMSNorm, why each is there.',
+        to: '/learn/transformer-block',
       },
       {
         title: 'Tokenization',
         detail:
           'BPE, why subword, how the tokenizer shapes everything downstream — an underrated source of bugs and quality.',
+        to: '/learn/tokenizer',
       },
       {
         title: 'Positional information',
         detail: 'Learned vs RoPE; why attention needs it at all.',
+        to: '/learn/positions',
       },
       {
         title: 'The training loop at language scale',
         detail: 'Data loading, batching, LR schedule, evaluation by loss/perplexity.',
+        to: '/learn/training-loop',
       },
       {
         title: 'The full pipeline',
         detail:
           "Pretrain → (optional) mid-train → SFT → eval, so you've seen the whole shape once before Phases 3–4 deepen each part.",
+        to: '/learn/pipeline',
       },
     ],
     path: [
