@@ -1,5 +1,4 @@
-import type { Doc } from '@/components/data-curation/model'
-import { tokenize } from '@/components/data-curation/model'
+import { type Doc, tokenize } from '@/components/data-curation/model'
 import { cn } from '@/lib/utils'
 
 /** One crawl document: id, token count, text — dimmed with reason chips when rejected. */

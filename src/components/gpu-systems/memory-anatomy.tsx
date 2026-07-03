@@ -10,7 +10,6 @@ import {
   trainMemory,
 } from '@/components/gpu-systems/model'
 import { Chips } from '@/components/lab/chips'
-import { cn } from '@/lib/utils'
 
 const SEGMENT_COLORS = [
   'var(--color-vermillion)',
@@ -21,8 +20,6 @@ const SEGMENT_COLORS = [
   'color-mix(in oklab, var(--color-ink) 25%, var(--color-paper-bright))',
 ]
 
-const expToParams = (v: number) => 10 ** v
-
 export function MemoryAnatomy() {
   const [exp, setExp] = useState(Math.log10(7e9))
   const [mode, setMode] = useState('training')
@@ -30,7 +27,7 @@ export function MemoryAnatomy() {
   const [batch, setBatch] = useState(1)
   const [seqExp, setSeqExp] = useState(11)
 
-  const n = expToParams(exp)
+  const n = 10 ** exp
   const seq = 2 ** seqExp
   const training = mode === 'training'
   const bpp = INFER_PRECISIONS.find((p) => p.id === precision)?.bytesPerParam ?? 2
@@ -183,7 +180,7 @@ function Verdict({ total }: { total: number }) {
   if (fit.length === 0) {
     const count = Math.ceil(total / (80 * 1e9))
     return (
-      <span className={cn('text-vermillion')}>
+      <span className="text-vermillion">
         OOM on every single card — ~{count}× 80GB worth of memory. This is why ZeRO, offload, and
         recomputation exist.
       </span>

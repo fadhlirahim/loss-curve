@@ -10,11 +10,11 @@
  * inference-aware bend) is computed numerically from this one formula.
  */
 
-export const E = 1.8172
-export const A = 482.01
-export const B = 2085.43
-export const ALPHA = 0.3478
-export const BETA = 0.3658
+const E = 1.8172
+const A = 482.01
+const B = 2085.43
+const ALPHA = 0.3478
+const BETA = 0.3658
 
 export const chinchillaLoss = (n: number, d: number) => E + A / n ** ALPHA + B / d ** BETA
 
@@ -28,7 +28,7 @@ export const lossTerms = (n: number, d: number) => ({
 /** Training compute in FLOPs, the standard 6ND approximation. */
 export const flopsFor = (n: number, d: number) => 6 * n * d
 
-export type Optimal = { n: number; d: number; loss: number; ratio: number }
+type Optimal = { n: number; d: number; loss: number; ratio: number }
 
 /** Best N (and implied D = C/6N) for a fixed budget C — dense scan, no closed form. */
 export const computeOptimal = (c: number): Optimal => {
@@ -62,7 +62,7 @@ export const sizingVerdict = (n: number, d: number) => {
   return 'ridge' as const
 }
 
-export type InferenceOptimal = {
+type InferenceOptimal = {
   n: number
   d: number
   train: number
@@ -72,7 +72,7 @@ export type InferenceOptimal = {
 }
 
 /** Smallest model that can ever reach targetLoss (data term → 0). */
-export const minParamsForLoss = (targetLoss: number) => (A / (targetLoss - E)) ** (1 / ALPHA)
+const minParamsForLoss = (targetLoss: number) => (A / (targetLoss - E)) ** (1 / ALPHA)
 
 const tokensForLossAtN = (targetLoss: number, n: number) => {
   const dataBudget = targetLoss - E - A / n ** ALPHA
@@ -108,7 +108,7 @@ export const inferenceCostCurve = (targetLoss: number, dInf: number, points = 12
   })
 }
 
-export type Gpu = { id: string; label: string; flops: number; defaultRate: number; note: string }
+type Gpu = { id: string; label: string; flops: number; defaultRate: number; note: string }
 
 /** Peak dense bf16 throughput — marketing sheets quote sparse/FP8, we don't. */
 export const GPUS: Gpu[] = [
@@ -125,7 +125,7 @@ export const GPUS: Gpu[] = [
 
 export const wallHours = (c: number, gpuFlops: number, mfu: number) => c / (gpuFlops * mfu) / 3600
 
-export type Preset = { id: string; label: string; n: number; d: number; story: string }
+type Preset = { id: string; label: string; n: number; d: number; story: string }
 
 export const PRESETS: Preset[] = [
   {

@@ -20,7 +20,7 @@ export const INFER_PRECISIONS = [
 ]
 
 /** AdamW mixed-precision training: 16 bytes riding on every parameter. */
-export const TRAIN_STATES = [
+const TRAIN_STATES = [
   { key: 'weights · bf16', bytesPerParam: 2 },
   { key: 'gradients · bf16', bytesPerParam: 2 },
   { key: 'master weights · fp32', bytesPerParam: 4 },
@@ -59,7 +59,7 @@ export const inferMemory = (n: number, bytesPerParam: number) => n * bytesPerPar
 
 /** ── roofline ─────────────────────────────────────────────────── */
 
-export type Op = { flops: number; bytes: number }
+type Op = { flops: number; bytes: number }
 
 export const matmulOp = (m: number, n: number, k: number): Op => ({
   flops: 2 * m * n * k,

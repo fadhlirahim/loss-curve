@@ -23,12 +23,12 @@ const gaussian = () => {
 }
 
 /** The base tensor: N(0, 0.5), fixed seed so SSR and client agree. */
-export const WEIGHTS = Array.from({ length: N_WEIGHTS }, () => gaussian() * 0.5)
+const WEIGHTS = Array.from({ length: N_WEIGHTS }, () => gaussian() * 0.5)
 
 const absmax = (w: number[]) => Math.max(...w.map(Math.abs))
 
 export const OUTLIER_INDEX = 137
-export const OUTLIER_FACTOR = 8
+const OUTLIER_FACTOR = 8
 const BASE_ABSMAX = absmax(WEIGHTS)
 
 /** The tensor with one activation-style outlier planted in it. */
@@ -89,7 +89,7 @@ export function rmseOutsideOutlierGroup(bits: number, groupSize: number): number
   return rmse(w.filter(keep), wq.filter(keep))
 }
 
-export type HistBin = { x0: number; x1: number; count: number }
+type HistBin = { x0: number; x1: number; count: number }
 
 export function histogram(w: number[], nBins: number): HistBin[] {
   const lim = absmax(w)
@@ -163,7 +163,7 @@ export function prune24(w: number[]): Pruned {
   return { w: w.map((v, i) => (mask[i] ? 0 : v)), mask }
 }
 
-export const SPARSITY_STEPS = Array.from({ length: 20 }, (_, i) => i * 0.05)
+const SPARSITY_STEPS = Array.from({ length: 20 }, (_, i) => i * 0.05)
 
 export const pruneCurve = (w: number[]) =>
   SPARSITY_STEPS.map((s) => ({ s, rmse: rmse(w, pruneMagnitude(w, s).w) }))

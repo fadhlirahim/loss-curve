@@ -8,7 +8,6 @@ import {
   DEFAULT_FILTERS,
   DOCS,
   dedup,
-  type FilterState,
   rejectReasons,
   totalTokens,
 } from '@/components/data-curation/model'
@@ -21,7 +20,7 @@ export const Route = createFileRoute('/learn/data-curation')({
 })
 
 function DataCurationPage() {
-  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+  const [filters, setFilters] = useState(DEFAULT_FILTERS)
   const [dedupT, setDedupT] = useState(0.8)
 
   const filtered = DOCS.filter((d) => rejectReasons(d, filters).length === 0)

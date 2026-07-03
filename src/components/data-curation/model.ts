@@ -111,7 +111,7 @@ export const tokenize = (text: string): string[] =>
 
 const alphaWords = (text: string) => tokenize(text).filter((t) => /[a-z]/.test(t))
 
-export type Scores = {
+type Scores = {
   words: number
   meanWordLen: number
   symbolRatio: number
@@ -119,7 +119,7 @@ export type Scores = {
   maxRepeat: number
 }
 
-export const scoreDoc = (text: string): Scores => {
+const scoreDoc = (text: string): Scores => {
   const words = alphaWords(text)
   const symbols = (text.match(/[^a-zA-Z0-9\s]/g) ?? []).length
   const alpha = (text.match(/[a-zA-Z]/g) ?? []).length
@@ -136,11 +136,11 @@ export const scoreDoc = (text: string): Scores => {
   }
 }
 
-export const SCORES = new Map(DOCS.map((d) => [d.id, scoreDoc(d.text)]))
+const SCORES = new Map(DOCS.map((d) => [d.id, scoreDoc(d.text)]))
 
-export type FilterKey = 'minWords' | 'meanWordLen' | 'symbolRatio' | 'stopwords' | 'repeat'
+type FilterKey = 'minWords' | 'meanWordLen' | 'symbolRatio' | 'stopwords' | 'repeat'
 
-export type FilterSpec = {
+type FilterSpec = {
   key: FilterKey
   label: string
   hint: string
@@ -241,7 +241,7 @@ export const rejectReasons = (doc: Doc, state: FilterState): string[] => {
 
 const normalize = (text: string) => tokenize(text).join(' ')
 
-export const trigrams = (text: string): Set<string> => {
+const trigrams = (text: string): Set<string> => {
   const words = tokenize(text)
   const grams = new Set<string>()
   for (let i = 0; i + 2 < words.length; i++) {
@@ -250,7 +250,7 @@ export const trigrams = (text: string): Set<string> => {
   return grams
 }
 
-export const jaccard = (a: Set<string>, b: Set<string>): number => {
+const jaccard = (a: Set<string>, b: Set<string>): number => {
   let inter = 0
   for (const g of a) {
     if (b.has(g)) inter++

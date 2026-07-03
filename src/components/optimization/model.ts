@@ -19,17 +19,15 @@ import { seededRng } from '@/components/neural-net/model'
 
 export type Vec = { x: number; y: number }
 
-export const fmt2 = (n: number) => n.toFixed(2)
-
 // ── §1 the noisy ravine ──────────────────────────────────────────
 
 export const KAPPA = 6
-export const NOISY_LR = 0.12
-export const NOISE_SCALE = 3
+const NOISY_LR = 0.12
+const NOISE_SCALE = 3
 export const NOISY_START: Vec = { x: -2.6, y: 1.25 }
 export const TRAJ_STEPS = 160
 
-export const noisyLoss = (p: Vec) => 0.5 * (p.x * p.x + KAPPA * p.y * p.y)
+const noisyLoss = (p: Vec) => 0.5 * (p.x * p.x + KAPPA * p.y * p.y)
 const noisyGrad = (p: Vec): Vec => ({ x: p.x, y: KAPPA * p.y })
 
 /** Per-coordinate std of the gradient noise at batch size B. */
@@ -71,7 +69,7 @@ export function noiseBallLoss(path: Vec[]): number {
   return tail.reduce((sum, p) => sum + noisyLoss(p), 0) / tail.length
 }
 
-export type Verdict = { label: string; tone: 'ok' | 'warn' | 'bad' }
+type Verdict = { label: string; tone: 'ok' | 'warn' | 'bad' }
 
 export function noisyVerdict(batch: number): Verdict {
   const snr = snrAtStart(batch)
@@ -104,7 +102,7 @@ export function batchVerdict(batch: number, bCrit: number): Verdict {
 export const N_EXAMPLES = 32
 export const MICRO_BATCH = 8
 export const ACCUM_STEPS = 30
-export const ACCUM_LR = 0.3
+const ACCUM_LR = 0.3
 export const ACCUM_START: Vec = { x: -1.5, y: 1.2 } // (w, b)
 
 /** Seeded 1-D regression set: y = 2x − 1 + noise. */
@@ -116,7 +114,7 @@ const makeData = () => {
   })
 }
 
-export const DATA = makeData()
+const DATA = makeData()
 
 export const mseLoss = (p: Vec) =>
   DATA.reduce((sum, d) => sum + (p.x * d.x + p.y - d.y) ** 2, 0) / N_EXAMPLES
@@ -167,7 +165,7 @@ function accumulatedStep(p: Vec): Vec {
   return { x: p.x - (ACCUM_LR * gx) / N_EXAMPLES, y: p.y - (ACCUM_LR * gy) / N_EXAMPLES }
 }
 
-export type AccumRun = { full: Vec[]; accum: Vec[]; maxDivergence: number }
+type AccumRun = { full: Vec[]; accum: Vec[]; maxDivergence: number }
 
 /** Both trajectories, plus the largest coordinate gap anywhere along them. */
 export function runAccumulation(steps = ACCUM_STEPS): AccumRun {

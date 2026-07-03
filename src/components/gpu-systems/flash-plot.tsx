@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { flashScoreBytes, fmtBytes, naiveScoreBytes } from '@/components/gpu-systems/model'
-import { cn } from '@/lib/utils'
 
 const W = 640
 const H = 280
@@ -157,7 +156,7 @@ export function FlashPlot() {
         </svg>
       </div>
 
-      <div className={cn('mt-4 border-l-2 px-4 py-3', 'border-vermillion bg-paper-bright')}>
+      <div className="mt-4 border-vermillion border-l-2 bg-paper-bright px-4 py-3">
         <p className="font-mono text-[0.68rem] text-vermillion uppercase tracking-widest">
           at T = {t.toLocaleString()} · naive {fmtBytes(naive)} vs flash {fmtBytes(flashB)} — per
           head

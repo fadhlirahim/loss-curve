@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { fmt2 } from '@/components/attention/model'
 import {
-  fmt2,
   KAPPA,
   NOISY_START,
   noiseBallLoss,
