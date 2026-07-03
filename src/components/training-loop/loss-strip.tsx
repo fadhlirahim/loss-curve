@@ -1,4 +1,4 @@
-export type Series = {
+type Series = {
   label: string
   values: number[]
   color: string

@@ -13,7 +13,7 @@ export const Route = createFileRoute('/learn/tokenizer')({
 
 const DEFAULT_INPUT = 'the bird ate the worm because it was hungry'
 
-const PRESETS: { title: string; story: string; setup: string }[] = [
+const PRESETS = [
   {
     title: 'arithmetic',
     story:

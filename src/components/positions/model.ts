@@ -11,7 +11,7 @@
 import { RAW } from '@/components/attention/model'
 
 /** Fixed permutations of the 9-token sentence — deterministic, SSR-safe. */
-export const PERMUTATIONS: { label: string; order: number[] }[] = [
+export const PERMUTATIONS = [
   { label: 'original', order: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
   { label: 'bird ↔ worm', order: [0, 4, 2, 3, 1, 5, 6, 7, 8] },
   { label: 'reversed', order: [8, 7, 6, 5, 4, 3, 2, 1, 0] },
@@ -72,7 +72,7 @@ export const rotate = (v: readonly [number, number], angle: number): [number, nu
 export const ropeQ = (i: number) => rotate(Q0, i * THETA)
 export const ropeK = (j: number) => rotate(K0, j * THETA)
 
-export const dot2 = (a: readonly [number, number], b: readonly [number, number]) =>
+const dot2 = (a: readonly [number, number], b: readonly [number, number]) =>
   a[0] * b[0] + a[1] * b[1]
 
 /** The number the lab keeps re-deriving: q·k after both rotations. */

@@ -14,7 +14,7 @@
  * 3. The assembled block — a step-through of x → LN → Attn → ⊕ → LN → MLP → ⊕.
  */
 
-export const RESIDUAL_DAMP = 0.1
+const RESIDUAL_DAMP = 0.1
 
 /** Signal magnitude per layer, starting at 1. Length depth+1. */
 export const streamNorms = (gain: number, depth: number, residual: boolean) => {
@@ -23,7 +23,7 @@ export const streamNorms = (gain: number, depth: number, residual: boolean) => {
 }
 
 /** One token's slice of the residual stream, 6 dims wide. */
-export const BASE_VEC = [1.4, -0.6, 0.3, -1.1, 0.8, -0.2]
+const BASE_VEC = [1.4, -0.6, 0.3, -1.1, 0.8, -0.2]
 
 export const driftVec = (scale: number, shift: number) => BASE_VEC.map((v) => v * scale + shift)
 
@@ -47,16 +47,8 @@ export const rmsNorm = (v: number[]) => {
   return v.map((x) => x / r)
 }
 
-export type BlockStep = {
-  id: string
-  /** Label on the diagram box. */
-  box: string
-  name: string
-  note: string
-}
-
 /** The walkthrough, one ticker entry per piece of the block. */
-export const BLOCK_STEPS: BlockStep[] = [
+export const BLOCK_STEPS = [
   {
     id: 'x',
     box: 'x',

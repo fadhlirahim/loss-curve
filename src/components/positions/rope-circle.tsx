@@ -92,14 +92,13 @@ function Circle({ children }: { children: ReactNode }) {
 const PW = 460
 const PH = 170
 const PAD = { top: 16, right: 18, bottom: 30, left: 44 }
-const OFF_MAX = ROPE_MAX_POS
 
 const ox = (off: number) =>
-  PAD.left + ((off + OFF_MAX) / (2 * OFF_MAX)) * (PW - PAD.left - PAD.right)
+  PAD.left + ((off + ROPE_MAX_POS) / (2 * ROPE_MAX_POS)) * (PW - PAD.left - PAD.right)
 const oy = (d: number) => PAD.top + ((1 - d) / 2) * (PH - PAD.top - PAD.bottom)
 
 const OFFSET_PATH = Array.from({ length: 161 }, (_, s) => {
-  const off = -OFF_MAX + (s / 160) * 2 * OFF_MAX
+  const off = -ROPE_MAX_POS + (s / 160) * 2 * ROPE_MAX_POS
   return `${s === 0 ? 'M' : 'L'}${ox(off).toFixed(1)},${oy(dotAtOffset(off)).toFixed(1)}`
 }).join(' ')
 

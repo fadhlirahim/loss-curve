@@ -18,7 +18,7 @@ export const CORPUS =
   'old man read his book by the fire and the rain fell all night. she sang a ' +
   'soft song to the wind and the stars came out one by one.'
 
-export const VOCAB = [...new Set(CORPUS)].sort()
+const VOCAB = [...new Set(CORPUS)].sort()
 export const VOCAB_SIZE = VOCAB.length
 
 /** Loss of pure uniform guessing — where a zeros-initialized model starts. */
@@ -36,7 +36,7 @@ export const fmt = (n: number) => (Number.isFinite(n) ? n.toFixed(2) : '∞')
 
 // ── batching ─────────────────────────────────────────────────────
 
-export type Batch = {
+type Batch = {
   /** window start offsets into the id stream, one per row */
   starts: number[]
   /** xs[b][t] is the input char id; ys[b][t] is its prediction target */

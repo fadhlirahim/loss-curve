@@ -8,7 +8,7 @@
 
 export type StageId = 'pretrain' | 'midtrain' | 'sft' | 'eval'
 
-export type Stage = {
+type Stage = {
   id: StageId
   name: string
   optional?: boolean
@@ -80,7 +80,7 @@ export const STAGES: Stage[] = [
 
 export const PROMPT = 'What is self-attention?'
 
-export type StageOutput =
+type StageOutput =
   | { kind: 'text'; label: string; text: string; note: string }
   | {
       kind: 'scorecard'
@@ -125,9 +125,7 @@ export const OUTPUTS: Record<StageId, StageOutput> = {
   },
 }
 
-export type LoopRow = { stage: string; tokens: string; epochs: string; lr: string; step: string }
-
-export const LOOP_ROWS: LoopRow[] = [
+export const LOOP_ROWS = [
   {
     stage: 'pretrain',
     tokens: '≈11B',

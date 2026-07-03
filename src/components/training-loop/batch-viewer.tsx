@@ -86,35 +86,38 @@ export function BatchViewer() {
       {/* the batch itself */}
       <div className="mt-5 overflow-x-auto border-paper-edge border-t pt-4">
         <div className="w-max space-y-2">
-          {batch.xs.map((row, bi) => (
-            <div
-              key={`row-${batch.starts[bi]}-${
-                // biome-ignore lint/suspicious/noArrayIndexKey: rows can sample the same start; position disambiguates
-                bi
-              }`}
-              className="flex items-end gap-[2px]"
-            >
-              <span className="mr-2 w-14 font-mono text-[0.6rem] text-ink-faint">
-                row {bi} · @{batch.starts[bi]}
-              </span>
-              {idsToChars(row).map((ch, ti) => (
-                <span
-                  key={`cell-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: cell position is the identity
-                    ti
-                  }`}
-                  className="flex flex-col items-center"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center border border-paper-edge bg-paper-bright font-mono text-[0.8rem] text-ink">
-                    {ch === ' ' ? '␣' : ch}
-                  </span>
-                  <span className="mt-[2px] font-mono text-[0.6rem] text-vermillion">
-                    {idsToChars(batch.ys[bi])[ti] === ' ' ? '␣' : idsToChars(batch.ys[bi])[ti]}
-                  </span>
+          {batch.xs.map((row, bi) => {
+            const targets = idsToChars(batch.ys[bi])
+            return (
+              <div
+                key={`row-${batch.starts[bi]}-${
+                  // biome-ignore lint/suspicious/noArrayIndexKey: rows can sample the same start; position disambiguates
+                  bi
+                }`}
+                className="flex items-end gap-[2px]"
+              >
+                <span className="mr-2 w-14 font-mono text-[0.6rem] text-ink-faint">
+                  row {bi} · @{batch.starts[bi]}
                 </span>
-              ))}
-            </div>
-          ))}
+                {idsToChars(row).map((ch, ti) => (
+                  <span
+                    key={`cell-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: cell position is the identity
+                      ti
+                    }`}
+                    className="flex flex-col items-center"
+                  >
+                    <span className="flex h-7 w-7 items-center justify-center border border-paper-edge bg-paper-bright font-mono text-[0.8rem] text-ink">
+                      {ch === ' ' ? '␣' : ch}
+                    </span>
+                    <span className="mt-[2px] font-mono text-[0.6rem] text-vermillion">
+                      {targets[ti] === ' ' ? '␣' : targets[ti]}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            )
+          })}
         </div>
       </div>
 
