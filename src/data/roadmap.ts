@@ -10,6 +10,7 @@ export type LearnRoute =
   | '/learn/neural-net'
   | '/learn/core-ml'
   | '/learn/math'
+  | '/learn/attention'
 
 export type Phase = {
   slug: string
@@ -221,6 +222,7 @@ export const PHASES: Phase[] = [
         title: 'Self-attention',
         detail:
           'Queries/keys/values, multi-head attention, causal masking. Implement it from scratch; this is the centerpiece.',
+        to: '/learn/attention',
       },
       {
         title: 'The transformer block',
