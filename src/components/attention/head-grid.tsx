@@ -1,7 +1,4 @@
-import { HEADS, pct, TOKENS } from '@/components/attention/model'
-
-const heat = (w: number) =>
-  `color-mix(in oklab, var(--color-vermillion-deep) ${Math.round(w * 100)}%, var(--color-paper-bright))`
+import { HEADS, heat, pct, TOKENS } from '@/components/attention/model'
 
 const HATCH =
   'repeating-linear-gradient(45deg, var(--color-paper-deep) 0 2px, var(--color-paper) 2px 4px)'

@@ -1,10 +1,7 @@
 import { useState } from 'react'
-import { ATTN_CAUSAL, pct, TOKENS, topTargets } from '@/components/attention/model'
+import { ATTN_CAUSAL, heat, pct, TOKENS, topTargets } from '@/components/attention/model'
 import { Chips } from '@/components/lab/chips'
 import { cn } from '@/lib/utils'
-
-const heat = (w: number) =>
-  `color-mix(in oklab, var(--color-vermillion-deep) ${Math.min(100, Math.round(w * 130))}%, var(--color-paper-bright))`
 
 /**
  * §4 — the payoff: a token's softmax row rendered as the spending budget it
@@ -39,7 +36,7 @@ export function BlendBar() {
                 'flex min-w-[2px] items-center justify-center overflow-hidden',
                 w > 0.42 ? 'text-paper-bright' : 'text-ink',
               )}
-              style={{ flexGrow: w, background: heat(w) }}
+              style={{ flexGrow: w, background: heat(w, 130) }}
             >
               {w >= 0.09 && (
                 <span className="whitespace-nowrap font-mono text-[0.62rem]">{TOKENS[j]}</span>

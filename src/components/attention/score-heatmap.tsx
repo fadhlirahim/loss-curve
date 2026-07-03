@@ -5,6 +5,7 @@ import {
   D_K,
   DIMS,
   fmt2,
+  heat,
   K,
   pct,
   Q,
@@ -34,9 +35,6 @@ const STAGES = [
   },
 ]
 
-const heat = (w: number) =>
-  `color-mix(in oklab, var(--color-vermillion-deep) ${Math.round(w * 100)}%, var(--color-paper-bright))`
-
 const HATCH =
   'repeating-linear-gradient(45deg, var(--color-paper-deep) 0 3px, var(--color-paper) 3px 6px)'
 
@@ -54,7 +52,7 @@ export function ScoreHeatmap() {
 
   const attn = mask ? ATTN_CAUSAL : ATTN_FULL
 
-  const cellView = (i: number, j: number): { w: number; label: string; masked: boolean } => {
+  const cellView = (i: number, j: number) => {
     if (stage >= 2 && mask && j > i) return { w: 0, label: '−∞', masked: true }
     switch (stage) {
       case 0:

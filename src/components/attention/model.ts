@@ -16,7 +16,7 @@ export const DIMS = ['thing?', 'animate?', 'action?', 'glue?']
 export const D_K = DIMS.length
 
 /** What each token asks for. */
-export const Q: number[][] = [
+export const Q = [
   [0.3, 0.0, 0.0, 0.7], // the
   [0.3, 0.3, 0.5, 0.3], // bird
   [1.0, 1.2, 0.0, 0.0], // ate — looking for its animate subject
@@ -29,7 +29,7 @@ export const Q: number[][] = [
 ]
 
 /** What each token advertises. */
-export const K: number[][] = [
+export const K = [
   [0.0, 0.0, 0.0, 1.0], // the
   [1.2, 1.1, 0.0, 0.0], // bird
   [0.0, 0.2, 1.2, 0.0], // ate
@@ -57,50 +57,51 @@ export const STORIES = [
 const dot = (a: number[], b: number[]) => a.reduce((sum, x, i) => sum + x * b[i], 0)
 
 /** Raw agreement: every query dotted with every key. */
-export const RAW: number[][] = Q.map((q) => K.map((k) => dot(q, k)))
+export const RAW = Q.map((q) => K.map((k) => dot(q, k)))
 
 export const RAW_MAX = Math.max(...RAW.flat())
 
 /** The same matrix ÷ √d — what actually enters softmax. */
-export const SCALED: number[][] = RAW.map((row) => row.map((v) => v / Math.sqrt(D_K)))
+export const SCALED = RAW.map((row) => row.map((v) => v / Math.sqrt(D_K)))
 
-const softmaxRow = (i: number, mask: boolean): number[] => {
-  const logits = SCALED[i].map((v, j) => (mask && j > i ? Number.NEGATIVE_INFINITY : v))
+const softmax = (logits: number[]) => {
   const max = Math.max(...logits)
   const exps = logits.map((v) => (v === Number.NEGATIVE_INFINITY ? 0 : Math.exp(v - max)))
   const sum = exps.reduce((a, b) => a + b, 0)
   return exps.map((e) => e / sum)
 }
 
+const softmaxRow = (i: number, mask: boolean) =>
+  softmax(SCALED[i].map((v, j) => (mask && j > i ? Number.NEGATIVE_INFINITY : v)))
+
 /** Each row: how token i spends its 100% attention budget over positions ≤ i. */
-export const ATTN_CAUSAL: number[][] = TOKENS.map((_, i) => softmaxRow(i, true))
+export const ATTN_CAUSAL = TOKENS.map((_, i) => softmaxRow(i, true))
 
 /** The bidirectional (BERT-style) variant — what unticking the mask shows. */
-export const ATTN_FULL: number[][] = TOKENS.map((_, i) => softmaxRow(i, false))
+export const ATTN_FULL = TOKENS.map((_, i) => softmaxRow(i, false))
 
 export const fmt2 = (n: number) => n.toFixed(2)
 
 export const pct = (n: number) => `${Math.round(n * 100)}%`
 
+export const heat = (w: number, scale = 100) =>
+  `color-mix(in oklab, var(--color-vermillion-deep) ${Math.min(100, Math.round(w * scale))}%, var(--color-paper-bright))`
+
 /** Top attention targets for token i, strongest first. */
 export const topTargets = (i: number, weights: number[][] = ATTN_CAUSAL) =>
   weights[i].map((w, j) => ({ w, j })).sort((a, b) => b.w - a.w)
 
-export type Head = {
+type Head = {
   name: string
   desc: string
   /** Post-softmax causal attention pattern, rows summing to 1. */
   weights: number[][]
 }
 
-const headFromScores = (score: (i: number, j: number) => number): number[][] =>
-  TOKENS.map((_, i) => {
-    const logits = TOKENS.map((_t, j) => (j > i ? Number.NEGATIVE_INFINITY : score(i, j)))
-    const max = Math.max(...logits)
-    const exps = logits.map((v) => (v === Number.NEGATIVE_INFINITY ? 0 : Math.exp(v - max)))
-    const sum = exps.reduce((a, b) => a + b, 0)
-    return exps.map((e) => e / sum)
-  })
+const headFromScores = (score: (i: number, j: number) => number) =>
+  TOKENS.map((_, i) =>
+    softmax(TOKENS.map((_t, j) => (j > i ? Number.NEGATIVE_INFINITY : score(i, j)))),
+  )
 
 /** Three caricatures of head types actually found in trained GPT-2. */
 export const HEADS: Head[] = [
