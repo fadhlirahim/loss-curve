@@ -152,6 +152,7 @@ function HomePage() {
       {/* ── phase map ────────────────────────────────────────── */}
       <Section label="§ 4 · The phase map" title="Six phases, one spiral">
         <PhaseMap />
+        <LabsStrip />
         <p className="prose-note mt-8 max-w-2xl">
           Woven through all phases:{' '}
           <Link to="/method" className="link-ink">
@@ -305,6 +306,37 @@ function Diagnostic() {
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+/** Every learn item across all phases that ships an interactive lab. */
+function LabsStrip() {
+  const labs = PHASES.flatMap((phase) =>
+    phase.learn.flatMap((item) =>
+      item.to ? [{ phase: phase.number, title: item.title, to: item.to }] : [],
+    ),
+  )
+
+  return (
+    <div className="mt-8 border border-paper-edge bg-paper-deep/40 p-4 sm:p-6">
+      <p className="font-mono text-[0.65rem] text-ink-faint uppercase tracking-widest">
+        the labs · interactive explainers
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {labs.map((lab) => (
+          <Link
+            key={lab.to}
+            to={lab.to}
+            className="border border-paper-edge bg-paper-bright px-3 py-1.5 font-mono text-ink-soft text-xs transition-colors hover:border-vermillion hover:text-ink"
+          >
+            <span className="text-vermillion">{lab.phase}</span> · {lab.title.toLowerCase()}
+          </Link>
+        ))}
+      </div>
+      <p className="mt-3 font-mono text-[0.7rem] text-ink-faint">
+        one idea per page, every number draggable. read less, poke more.
+      </p>
     </div>
   )
 }
