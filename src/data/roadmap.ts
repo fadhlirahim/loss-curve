@@ -16,6 +16,11 @@ export type LearnRoute =
   | '/learn/positions'
   | '/learn/training-loop'
   | '/learn/pipeline'
+  | '/learn/scaling-laws'
+  | '/learn/gpu-systems'
+  | '/learn/data-curation'
+  | '/learn/optimization'
+  | '/learn/efficiency'
 
 export type Phase = {
   slug: string
@@ -341,26 +346,31 @@ export const PHASES: Phase[] = [
         title: 'Scaling laws',
         detail:
           'Chinchilla (compute-optimal ~20 tokens/param), what they predict and where they break. The conceptual basis for "small but well-trained."',
+        to: '/learn/scaling-laws',
       },
       {
         title: 'Efficiency / GPU systems',
         detail:
           'Mixed precision (bf16), MFU, memory vs compute, FlashAttention, a reading-level grasp of kernels (Triton) and parallelism. Know where the time and memory go.',
+        to: '/learn/gpu-systems',
       },
       {
         title: 'Data',
         detail:
           'The biggest lever in practice. Curation, filtering, deduplication; why data quality often beats architecture (TinyStories → Phi → SmolLM).',
+        to: '/learn/data-curation',
       },
       {
         title: 'Optimization at scale',
         detail:
           'LR schedules, warmup, the modern optimizer landscape (AdamW, Muon), gradient accumulation, batch-size effects.',
+        to: '/learn/optimization',
       },
       {
         title: 'The small-models efficiency toolkit',
         detail:
           'Quantization (GPTQ/AWQ/GGUF), knowledge distillation, pruning/sparsity, efficient architectures. Read enough to run experiments in each.',
+        to: '/learn/efficiency',
       },
     ],
     path: [
