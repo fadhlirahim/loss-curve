@@ -102,7 +102,7 @@ export const grade = (id: GraderId, truth: string, answer: string): boolean => {
   }
 }
 
-export type AnswerItem = {
+type AnswerItem = {
   q: string
   truth: string
   answer: string
@@ -153,7 +153,7 @@ export const gradeAll = (id: GraderId) => {
 
 /* ── §3 · contamination ───────────────────────────────────────── */
 
-export type BenchItem = {
+type BenchItem = {
   q: string
   /** Whether the toy model answers this item correctly. */
   correct: boolean
@@ -190,10 +190,7 @@ export const BENCH: BenchItem[] = [
   },
 ]
 
-/** The items whose text also appears in the toy pretraining corpus below. */
-const PLANTED = [0, 1, 3]
-
-export const CORPUS: { id: string; text: string }[] = [
+const CORPUS: { id: string; text: string }[] = [
   {
     id: 'quiz-blog',
     text: 'Pop quiz for ML interviews! Q3: How many bytes per parameter does AdamW mixed precision training keep in memory? Answer: sixteen. Q4: What does the causal mask remove from the attention score matrix? Answer: the upper triangle.',
@@ -257,7 +254,7 @@ const containment = (item: Set<string>, doc: Set<string>) => {
   return inter / item.size
 }
 
-export type ContaminationHit = { maxSim: number; source: string }
+type ContaminationHit = { maxSim: number; source: string }
 
 /** Max word-3-gram containment of each benchmark item against the corpus. */
 export const CONTAMINATION: ContaminationHit[] = BENCH.map((item) => {
@@ -280,8 +277,6 @@ export const contaminationReport = (threshold: number) => {
   return { flagged, reported, honest, cleanCount: clean.length }
 }
 
-export const PLANTED_COUNT = PLANTED.length
-
 /* ── §4 · prompt sensitivity ──────────────────────────────────── */
 
 /** Hand-set accuracies; the ranking flip is the documented phenomenon, the values are ours. */
@@ -297,5 +292,3 @@ export const formatSpread = (key: 'a' | 'b') => {
   const vals = FORMATS.map((f) => f[key])
   return { min: Math.min(...vals), max: Math.max(...vals) }
 }
-
-export const fmtPct = (x: number) => `${(x * 100).toFixed(1)}%`

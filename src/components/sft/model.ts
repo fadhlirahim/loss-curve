@@ -16,11 +16,11 @@ import { seededRng } from '@/components/neural-net/model'
 
 /* ── §1 · chat template & loss mask ─────────────────────────── */
 
-export type TokenKind = 'marker' | 'system' | 'user' | 'response'
+type TokenKind = 'marker' | 'system' | 'user' | 'response'
 
-export type Chunk = { text: string; kind: TokenKind; trained: boolean }
+type Chunk = { text: string; kind: TokenKind; trained: boolean }
 
-export type Example = {
+type Example = {
   id: string
   label: string
   system: string
@@ -100,7 +100,7 @@ export const chunkCounts = (chunks: Chunk[]) => {
 export const D = 16
 const COMPONENTS = 6
 
-export const SIGMA = [5, 3, 1.8, 1.0, 0.5, 0.25]
+const SIGMA = [5, 3, 1.8, 1.0, 0.5, 0.25]
 
 const rng = seededRng(20260704)
 const gauss = () => {
@@ -160,7 +160,7 @@ export const rankApprox = (r: number): number[][] => {
 
 const frob2 = (m: number[][]) => m.flat().reduce((s, x) => s + x * x, 0)
 
-export const DELTA_ENERGY = frob2(DELTA_W)
+const DELTA_ENERGY = frob2(DELTA_W)
 
 /** Fraction of ΔW's energy explained at rank r: 1 − ‖ΔW − approx‖²/‖ΔW‖². */
 export const energyAt = (r: number) => {
@@ -187,14 +187,6 @@ const GB = 1024 ** 3
 /** 1B-class reference config: L=16, d=2048, r=16 on q,k,v,o projections. */
 const ADAPTER_PARAMS = 4 * 16 * 2 * 2048 * 16 // 4 matrices × 16 layers × 2dr
 
-export type CostRow = {
-  method: string
-  trained: string
-  oneB: number
-  threeB: number
-  note: string
-}
-
 const STATE_BYTES = 16 // bf16 w + bf16 g + fp32 master + fp32 m + fp32 v
 const row = (method: string, trained: string, oneB: number, threeB: number, note: string) => ({
   method,
@@ -204,7 +196,7 @@ const row = (method: string, trained: string, oneB: number, threeB: number, note
   note,
 })
 
-export const COST_ROWS: CostRow[] = [
+export const COST_ROWS = [
   row(
     'full fine-tune',
     'every param',

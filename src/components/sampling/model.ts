@@ -35,7 +35,7 @@ const softmax = (logits: number[]) => {
   return exps.map((e) => e / sum)
 }
 
-export type KnobResult = {
+type KnobResult = {
   /** Final probability per candidate (0 for excluded), summing to 1. */
   probs: number[]
   /** Tempered pre-truncation probability per candidate (for ghost bars). */
@@ -66,7 +66,7 @@ export const applyKnobs = (temp: number, topK: number, topP: number): KnobResult
 
 /* ── §2 · the Markov chain ─────────────────────────────────────── */
 
-export const END = '∎'
+const END = '∎'
 
 /** Rows sum to 1. Greedy from "the" enters the → bird → ate → the … forever. */
 const CHAIN = new Map<string, [string, number][]>([
@@ -158,7 +158,7 @@ const CHAIN = new Map<string, [string, number][]>([
   ],
 ])
 
-export const WALK_CAP = 12
+const WALK_CAP = 12
 
 /** Always picks the argmax next word. Returns the walk and where it started repeating. */
 export const greedyWalk = (): { words: string[]; cycleStart: number } => {
@@ -208,7 +208,7 @@ export const sampleWalk = (seed: number, temp: number): string[] => {
  * near T=0.7 (greedy commits to one wrong approach), gentle decline after.
  * The SHAPE is hand-drawn; the pass@k arithmetic below it is exact.
  */
-export const successRate = (temp: number) => {
+const successRate = (temp: number) => {
   const sigma = temp < 0.7 ? 0.35 : 1.0
   return 0.03 + 0.15 * Math.exp(-(((temp - 0.7) / sigma) ** 2))
 }
@@ -217,7 +217,7 @@ export const successRate = (temp: number) => {
  * Effective independent attempts out of k: at T→0 every sample is the same
  * attempt (k_eff→1); diversity buys independence back as T rises.
  */
-export const effectiveK = (temp: number, k: number) => 1 + (k - 1) * Math.min(1, temp / 1.6)
+const effectiveK = (temp: number, k: number) => 1 + (k - 1) * Math.min(1, temp / 1.6)
 
 export const passAtK = (temp: number, k: number) =>
   1 - (1 - successRate(temp)) ** effectiveK(temp, k)

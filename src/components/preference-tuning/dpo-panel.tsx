@@ -38,14 +38,7 @@ export function DpoPanel() {
     return `${px(m).toFixed(1)},${py(dpoLossAt(m, beta)).toFixed(1)}`
   }).join(' ')
 
-  const sliders: {
-    label: string
-    value: number
-    set: (n: number) => void
-    min: number
-    max: number
-    step: number
-  }[] = [
+  const sliders = [
     {
       label: 'log-ratio, chosen',
       value: chosenRatio,

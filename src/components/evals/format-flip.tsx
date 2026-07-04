@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { FORMATS, formatSpread } from '@/components/evals/model'
 import { Chips } from '@/components/lab/chips'
-import { cn } from '@/lib/utils'
 
 function ScoreBar({
   label,
@@ -92,7 +91,7 @@ export function FormatFlip() {
             real and documented). Fix: randomize order per item, report both directions.
           </p>
         </div>
-        <div className={cn('border border-paper-edge bg-paper-bright p-4')}>
+        <div className="border border-paper-edge bg-paper-bright p-4">
           <p className="font-mono text-[0.65rem] text-moss uppercase tracking-widest">
             why pairwise still beats absolute
           </p>

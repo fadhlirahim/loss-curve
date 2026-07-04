@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 export function GrpoPanel() {
   const [correct, setCorrect] = useState(ATTEMPTS.map((a) => a.correct))
 
-  const rewards: number[] = correct.map((c) => (c ? 1 : 0))
+  const rewards = correct.map((c) => (c ? 1 : 0))
   const { advantages, uniform, mean, std } = groupAdvantages(rewards)
   const nCorrect = correct.filter(Boolean).length
 

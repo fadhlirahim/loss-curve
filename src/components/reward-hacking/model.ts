@@ -16,7 +16,7 @@ const KEYWORDS = ['great question', 'happy to help', 'certainly', 'helpful', 'co
 const RELEVANCE_TERMS = ['deploy', 'revert', 'rollback', 'roll back', 'artifact', 'migration']
 const HEDGES = ['maybe', 'possibly', 'not sure', 'i think']
 
-export type Judged = {
+type Judged = {
   id: string
   label: string
   text: string
@@ -69,22 +69,22 @@ const RESPONSE_TEXTS: { id: string; label: string; text: string }[] = [
   },
 ]
 
-export const RESPONSES: Judged[] = RESPONSE_TEXTS.map((r) => ({
+const RESPONSES: Judged[] = RESPONSE_TEXTS.map((r) => ({
   ...r,
   features: scoreFeatures(r.text),
 }))
 
 /** Fixed weights; the length weight is the lab's slider. */
-export const WEIGHTS = { relevance: 2.0, keywords: 1.5, lists: 0.8, hedging: -1.0 }
+const WEIGHTS = { relevance: 2.0, keywords: 1.5, lists: 0.8, hedging: -1.0 }
 export const DEFAULT_LENGTH_WEIGHT = 3.0
 
-export type ScoreBreakdown = {
+type ScoreBreakdown = {
   id: string
   total: number
   terms: { name: string; weight: number; value: number; contribution: number }[]
 }
 
-export const judge = (r: Judged, lengthWeight: number): ScoreBreakdown => {
+const judge = (r: Judged, lengthWeight: number): ScoreBreakdown => {
   const terms = [
     { name: 'relevance', weight: WEIGHTS.relevance, value: r.features.relevance },
     { name: 'length', weight: lengthWeight, value: r.features.length },
@@ -106,10 +106,10 @@ export const ranked = (lengthWeight: number) =>
 const gains = (d: number) => (1.4 * d) / (1 + 0.8 * d)
 
 /** What the proxy reward model reports — misspecification never stops paying. */
-export const proxyReward = (d: number) => gains(d) + 0.45 * d
+const proxyReward = (d: number) => gains(d) + 0.45 * d
 
 /** What a careful human would actually score — bloat eventually poisons it. */
-export const trueQuality = (d: number) => gains(d) - 0.22 * d * d
+const trueQuality = (d: number) => gains(d) - 0.22 * d * d
 
 const dProxy = (d: number) => 1.4 / (1 + 0.8 * d) ** 2 + 0.45
 
