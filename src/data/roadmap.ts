@@ -21,6 +21,11 @@ export type LearnRoute =
   | '/learn/data-curation'
   | '/learn/optimization'
   | '/learn/efficiency'
+  | '/learn/sft'
+  | '/learn/preference-tuning'
+  | '/learn/reward-hacking'
+  | '/learn/evals'
+  | '/learn/sampling'
 
 export type Phase = {
   slug: string
@@ -453,25 +458,30 @@ export const PHASES: Phase[] = [
         title: 'SFT / instruction tuning',
         detail:
           'Turning a base model into one that follows instructions; data formats; LoRA/QLoRA for doing it cheaply on one GPU.',
+        to: '/learn/sft',
       },
       {
         title: 'Preference & RL methods',
         detail:
           'RLHF (the canonical recipe), DPO (simpler, no separate reward model), GRPO/RLVR (RL from verifiable rewards — the current frontier for reasoning).',
+        to: '/learn/preference-tuning',
       },
       {
         title: 'Reward modeling',
         detail:
           "What a reward model is, reward hacking, why a verifier with skin in the game can't be a fair verifier.",
+        to: '/learn/reward-hacking',
       },
       {
         title: 'Evaluation as a discipline',
         detail:
           'How benchmarks lie: contamination, prompt sensitivity, the metric–behavior gap, why pairwise beats absolute scoring. The most important sub-topic in the phase.',
+        to: '/learn/evals',
       },
       {
         title: 'Inference-time methods',
         detail: 'Sampling, speculative decoding, why decoding choices change measured quality.',
+        to: '/learn/sampling',
       },
     ],
     path: [
