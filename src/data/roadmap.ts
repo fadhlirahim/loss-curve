@@ -62,7 +62,7 @@ export const PHASES: Phase[] = [
       {
         title: 'First vertical slice (1–2 days)',
         detail:
-          "Run the fast.ai Lesson 1 notebook, or train nanoGPT on tiny-shakespeare following the README. Watch a real training loop run and a loss curve drop. You will not understand most of it. That's fine.",
+          "Run the fast.ai Lesson 1 notebook, or train nanoGPT on tiny-shakespeare following the README (nanoGPT is deprecated but frozen — ideal for a first run: it will never change under you). Watch a real training loop run and a loss curve drop. You will not understand most of it. That's fine.",
       },
       {
         title: 'Public scaffolding (half a day)',
@@ -271,7 +271,7 @@ export const PHASES: Phase[] = [
       {
         title: 'Karpathy — "Let\'s build GPT" + nanoGPT',
         detail:
-          'Build a GPT from a blank file, then study nanoGPT as the clean reference. Train on tiny-shakespeare, then a slightly bigger corpus.',
+          'Build a GPT from a blank file, then study nanoGPT as the clean reference — deprecated since Nov 2025 in favor of nanochat (below), but still the shortest complete GPT you can hold in your head. Train on tiny-shakespeare, then a slightly bigger corpus.',
         href: 'https://github.com/karpathy/nanoGPT',
       },
       {
@@ -283,7 +283,7 @@ export const PHASES: Phase[] = [
       {
         title: 'Karpathy — nanochat',
         detail:
-          'Reproduce the entire modern stack once: tokenizer → pretrain → mid-train → SFT → eval → chat UI. The model is weak; running the whole pipeline is the point.',
+          "nanoGPT's official successor. Reproduce the entire modern stack once: tokenizer → pretrain → mid-train → SFT → eval → chat UI. The model is weak; running the whole pipeline is the point.",
         href: 'https://github.com/karpathy/nanochat',
       },
       {

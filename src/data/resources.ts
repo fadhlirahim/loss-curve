@@ -30,13 +30,13 @@ export const RESOURCE_SECTIONS: ResourceSection[] = [
       {
         name: 'nanoGPT',
         phase: '2',
-        note: 'Clean minimal GPT to study + train.',
+        note: 'Clean minimal GPT to study + train. Deprecated & frozen since Nov 2025 — still the shortest complete read; nanochat is the successor.',
         href: 'https://github.com/karpathy/nanoGPT',
       },
       {
         name: 'nanochat',
         phase: '2',
-        note: 'The full modern stack end-to-end (tokenizer→pretrain→SFT→eval→UI).',
+        note: "nanoGPT's official successor: the full modern stack end-to-end (tokenizer→pretrain→SFT→eval→UI).",
         href: 'https://github.com/karpathy/nanochat',
       },
       {

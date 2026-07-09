@@ -142,7 +142,9 @@ function TrainingLoopPage() {
         <p className="prose-note mt-8 max-w-2xl">
           nanoGPT's <strong>train.py is this exact page</strong>: the same get_batch dicing a
           stream, the same warmup+cosine schedule, the same cross-entropy read as val loss — with
-          the 24×24 matrix swapped for a transformer. You've now seen every part small; Phase 2's
+          the 24×24 matrix swapped for a transformer. nanoGPT is deprecated and frozen now, which
+          only makes that file better reading; its successor <strong>nanochat</strong> runs this
+          same loop inside the full pipeline. You've now seen every part small; Phase 2's
           deliverable is to assemble them yourself at full size.
         </p>
         <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-3">
@@ -162,7 +164,15 @@ function TrainingLoopPage() {
             rel="noreferrer"
             className="link-ink font-mono text-sm"
           >
-            nanoGPT — this page at full size ↗
+            nanoGPT — this page at full size (frozen) ↗
+          </a>
+          <a
+            href="https://github.com/karpathy/nanochat"
+            target="_blank"
+            rel="noreferrer"
+            className="link-ink font-mono text-sm"
+          >
+            nanochat — its successor ↗
           </a>
         </div>
       </Section>

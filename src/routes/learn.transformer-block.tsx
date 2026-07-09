@@ -127,8 +127,9 @@ function TransformerBlockPage() {
           Stack N of these blocks between an embedding (words → vectors) and an unembedding (vectors
           → next-word logits) and you have the entire GPT architecture — there is no other secret
           ingredient. Which means you can now read{' '}
-          <strong>nanoGPT's ~300 lines and recognize every one of them</strong>. That's the next
-          rep: build the block in PyTorch, from this page, without looking.
+          <strong>nanoGPT's ~300 lines and recognize every one of them</strong> (frozen at its 2025
+          deprecation — readable code doesn't rot; nanochat is the living successor). That's the
+          next rep: build the block in PyTorch, from this page, without looking.
         </p>
         <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-3">
           <Link
