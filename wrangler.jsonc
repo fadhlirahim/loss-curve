@@ -9,7 +9,7 @@
     "head_sampling_rate": 1
   },
   "vars": {
-    "APP_URL": "http://localhost:5173"
+    "APP_URL": "https://roadmap-to-mastery.xzod.workers.dev"
   }
   // Add bindings as needed (see /add-d1-table, /add-r2, /add-workflow, /add-ai-route)
 }
