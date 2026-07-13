@@ -92,6 +92,14 @@ function Nav() {
           <span className="hidden text-ink-faint sm:inline" title="checklist artifacts shipped">
             [{done}/{total}]
           </span>
+          <a
+            href="https://github.com/fadhlirahim/loss-curve"
+            target="_blank"
+            rel="noreferrer"
+            className="text-ink-soft transition-colors hover:text-vermillion"
+          >
+            github ↗
+          </a>
           <ThemeToggle />
         </nav>
       </div>

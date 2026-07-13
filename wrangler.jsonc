@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "roadmap-to-mastery",
+  "name": "loss-curve",
   "compatibility_date": "2026-04-01",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/entry.server.ts",
@@ -9,7 +9,7 @@
     "head_sampling_rate": 1
   },
   "vars": {
-    "APP_URL": "https://roadmap-to-mastery.xzod.workers.dev"
+    "APP_URL": "https://loss-curve.xzod.workers.dev"
   }
   // Add bindings as needed (see /add-d1-table, /add-r2, /add-workflow, /add-ai-route)
 }
